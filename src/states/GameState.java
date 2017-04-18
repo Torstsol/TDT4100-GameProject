@@ -248,10 +248,10 @@ public class GameState extends State{
 		//Switch states
 		if(counter == matrise[15][500] + 500 || missRow >= 5){
 //		if(counter == matrise[15][500] + 500){
-			game.finishState = new FinishState(game);
-			State.setState(game.finishState);
 			this.highscore = highscore(score);
 			writeFile(songName);
+			game.finishState = new FinishState(game);
+			State.setState(game.finishState);
 			resetGame = true;
 			try {
 				song.stopSound();
