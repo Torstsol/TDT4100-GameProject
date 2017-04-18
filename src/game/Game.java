@@ -55,7 +55,7 @@ public class Game implements Runnable {
 		gameState = new GameState(this);
 		menuState = new MenuState(this);
 		settingState = new SettingState(this);
-		//finishState = new FinishState(this);
+		finishState = new FinishState(this);
 		State.setState(menuState);
 	    State.getState().playSong();
 	}

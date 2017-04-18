@@ -163,7 +163,10 @@ public class GameState extends State{
 		isOut();
 		
 		counter++;
-
+		
+		if(score < 0){
+			score = 0;
+		}
 		
 		//Dette er venstre-pil logikk
 		
@@ -245,10 +248,10 @@ public class GameState extends State{
 		//Switch states
 		if(counter == matrise[15][500] + 500 || missRow >= 5){
 //		if(counter == matrise[15][500] + 500){
-			this.highscore = highscore(score);
-			writeFile(songName);
 			game.finishState = new FinishState(game);
 			State.setState(game.finishState);
+			this.highscore = highscore(score);
+			writeFile(songName);
 			resetGame = true;
 			try {
 				song.stopSound();
@@ -284,6 +287,7 @@ public class GameState extends State{
 //		g.fillRect(0, 0, 831, 720);
 		
 		g.drawImage(Assets.bg, 0, 0, 831, 720, null);
+		g.drawImage(Assets.bg1, 831, 0 , 449, 720, null);
 		
 		g.setColor(Color.DARK_GRAY);
 		g.fillOval(50, 575, 130, 130);
@@ -315,27 +319,38 @@ public class GameState extends State{
 		
 		//Text
 		
-		g.setFont(new Font("Verdana", Font.ITALIC, 60));
-		g.drawString("Score: " + score, 900, 150);
-		g.setFont(new Font("Verdana", Font.ITALIC, 40));
+		g.setColor(Color.white);
 		
-		switch (getMultiplier()){
-		case 10: g.setColor(Color.green);
-		break;
-		case 5: g.setColor(Color.MAGENTA);
-		break;
-		case 3: g.setColor(Color.blue);
-		break;
-		case 1: g.setColor(Color.CYAN);
-		break;
+		g.setFont(new Font("Segoe UI Light", Font.BOLD, 100));
+		
+		if(score < 10){
+			g.drawString("000" + score, 940, 180);
+		}
+		else if(score < 100){
+			g.drawString("00" + score, 940, 180);
+		}
+		else if(score < 1000){
+			g.drawString("0" + score, 940, 180);
+		}
+		else{
+			g.drawString("" + score, 940, 180);
 		}
 		
-		g.drawString("Multiplier: X" + getMultiplier(), 900, 200);
-		g.setFont(new Font("Verdana", Font.ITALIC, 20));
-		g.setColor(Color.black);
-		g.drawString("Number of consecutive hits: " + hitRow, 900, 230);
-
+		g.setFont(new Font("Segoe UI Light", Font.BOLD, 100));
+		g.drawString("" + getMultiplier(), 1150, 630);
 		
+		g.setFont(new Font("Segoe UI Light", Font.BOLD, 50));
+		if(hitRow < 10){
+			g.drawString("00" + hitRow, 1135, 405);
+			
+		}
+		else if(hitRow < 100){
+			g.drawString("0" + hitRow, 1135, 405);
+		}
+		else{
+			g.drawString("" + hitRow, 1135, 405);
+		}
+	
 		
 		//Arrows 272 tick = en runde
 		
@@ -367,13 +382,13 @@ public class GameState extends State{
 	
 	public int getMultiplier(){
 		if (hitRow >= topCombo){
-			return 10;
+			return 8;
 		}
 		else if (hitRow >= midCombo){
-			return 5;
+			return 4;
 		}
 		else if (hitRow >= lowCombo){
-			return 3;
+			return 2;
 		}
 		else{
 			return 1;
@@ -424,13 +439,13 @@ public class GameState extends State{
 			if(isIn(leftArrow1.getY())){
 				hitRow++;
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -444,13 +459,13 @@ public class GameState extends State{
 			if(isIn(leftArrow2.getY())){
 				hitRow++;
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -464,13 +479,13 @@ public class GameState extends State{
 			if(isIn(leftArrow3.getY())){
 				hitRow++;
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -484,13 +499,13 @@ public class GameState extends State{
 			if(isIn(leftArrow4.getY())){
 				hitRow++;
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -514,13 +529,13 @@ public class GameState extends State{
 			
 			if(isIn(upArrow1.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -534,13 +549,13 @@ public class GameState extends State{
 			}
 			if(isIn(upArrow2.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -554,13 +569,13 @@ public class GameState extends State{
 			}
 			if(isIn(upArrow3.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -574,13 +589,13 @@ public class GameState extends State{
 			}
 			if(isIn(upArrow4.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -604,13 +619,13 @@ public class GameState extends State{
 			
 			if(isIn(downArrow1.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -624,13 +639,13 @@ public class GameState extends State{
 			}
 			if(isIn(downArrow2.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -644,13 +659,13 @@ public class GameState extends State{
 			}
 			if(isIn(downArrow3.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -664,13 +679,13 @@ public class GameState extends State{
 			}
 			if(isIn(downArrow4.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -694,13 +709,13 @@ public class GameState extends State{
 			
 			if(isIn(rightArrow1.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -714,13 +729,13 @@ public class GameState extends State{
 			}
 			if(isIn(rightArrow2.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -734,13 +749,13 @@ public class GameState extends State{
 			}
 			if(isIn(rightArrow3.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
@@ -754,13 +769,13 @@ public class GameState extends State{
 			}
 			if(isIn(rightArrow4.getY())){
 				if (hitRow >= topCombo){
-					score += 1*10;
+					score += 8;
 				}
 				else if (hitRow >= midCombo){
-					score += 1*5;
+					score += 4;
 				}
 				else if (hitRow >= lowCombo){
-					score += 1*3;
+					score += 2;
 				}
 				else{
 					score += 1;
