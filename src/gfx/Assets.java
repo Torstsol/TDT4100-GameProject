@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 public class Assets {
 	
 	public static BufferedImage leftArrow, rightArrow, upArrow, downArrow, bg, bg1, menuBg, hitter;
+	public static BufferedImage finishBg, finishBg2;
 	
 	private static final int width = 600, height = 600;
 	
@@ -32,6 +33,16 @@ public class Assets {
 		SpriteSheet sheet4 = new SpriteSheet(ImageLoader.loadImage("/textures/hitter2.png"));
 		
 		hitter = sheet4.crop(0, 0, 140, 140); 
+		
+		SpriteSheet sheet10 = new SpriteSheet(ImageLoader.loadImage("/textures/finishStateScore3.png"));
+		
+		finishBg = sheet10.crop(0, 0, 449, 720);
+		
+		SpriteSheet sheet11 = new SpriteSheet(ImageLoader.loadImage("/textures/rightPane2.png"));
+		
+		finishBg2 = sheet11.crop(0, 0, 831, 720);		
+	
+		
 	}
 
 }
