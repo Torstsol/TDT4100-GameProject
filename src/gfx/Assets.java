@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 	
-	public static BufferedImage leftArrow, rightArrow, upArrow, downArrow, bg, bg1, menuBg;
+	public static BufferedImage leftArrow, rightArrow, upArrow, downArrow, bg, bg1, menuBg, hitter;
 	
 	private static final int width = 600, height = 600;
 	
@@ -29,6 +29,9 @@ public class Assets {
 		
 		menuBg = sheet3.crop(0, 0, 1280, 720);
 		
+		SpriteSheet sheet4 = new SpriteSheet(ImageLoader.loadImage("/textures/hitter2.png"));
+		
+		hitter = sheet4.crop(0, 0, 140, 140); 
 	}
 
 }

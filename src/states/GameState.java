@@ -286,32 +286,41 @@ public class GameState extends State{
 		g.drawImage(Assets.bg, 0, 0, 831, 720, null);
 		g.drawImage(Assets.bg1, 831, 0 , 449, 720, null);
 		
-		g.setColor(Color.DARK_GRAY);
-		g.fillOval(50, 575, 130, 130);
-		g.fillOval(250, 575, 130, 130);
-		g.fillOval(450, 575, 130, 130);
-		g.fillOval(650, 575, 130, 130);
-		
-		g.setColor(Color.WHITE);
-		g.fillOval(65, 575 + 15, 100, 100);
-		g.fillOval(265, 575 + 15, 100, 100);
-		g.fillOval(465, 575 + 15, 100, 100);
-		g.fillOval(665, 575 + 15, 100, 100);
-		
-		//Treff-analyse
-		
 		leftHit.render(g);
 		upHit.render(g);
 		downHit.render(g);
 		rightHit.render(g);
 		
-		//Svarte streker
+		g.drawImage(Assets.hitter,47,573,140,140,null);
+		g.drawImage(Assets.hitter,247,573,140,140,null);
+		g.drawImage(Assets.hitter,447,573,140,140,null);
+		g.drawImage(Assets.hitter,647,573,140,140,null);
 		
 		g.setColor(Color.DARK_GRAY);
-		g.fillRect(0, 550, 831, 5);
-		g.fillRect(213, 0, 4, 720);
-		g.fillRect(413, 0, 4, 720);
-		g.fillRect(613, 0, 4, 720);
+//		g.fillOval(50, 575, 130, 130);
+//		g.fillOval(250, 575, 130, 130);
+//		g.fillOval(450, 575, 130, 130);
+//		g.fillOval(650, 575, 130, 130);
+		
+		g.setColor(Color.WHITE);
+//		g.fillOval(65, 575 + 15, 100, 100);
+//		g.fillOval(265, 575 + 15, 100, 100);
+//		g.fillOval(465, 575 + 15, 100, 100);
+//		g.fillOval(665, 575 + 15, 100, 100);
+		
+		
+		
+		//Treff-analyse
+		
+
+		
+		//Svarte streker
+		
+		g.setColor(Color.BLACK);
+//		g.fillRect(0, 550, 831, 5);
+//		g.fillRect(213, 0, 4, 720);
+//		g.fillRect(413, 0, 4, 720);
+//		g.fillRect(613, 0, 4, 720);
 		g.fillRect(831, 0, 4, 720);
 		
 		//Text
