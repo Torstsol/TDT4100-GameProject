@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 	
-	public static BufferedImage leftArrow, rightArrow, upArrow, downArrow, bg, bg1, menuBg, finishBg, finishBg2;
+	public static BufferedImage leftArrow, rightArrow, upArrow, downArrow, bg, bg1, menuBg;
+	public static BufferedImage finishBg, finishBg2;
 	
 	private static final int width = 600, height = 600;
 	
