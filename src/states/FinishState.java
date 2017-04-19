@@ -33,7 +33,7 @@ public class FinishState extends State {
 		highscore = ((GameState) game.gameState).getHighscore();
 		position = ((GameState) game.gameState).getPosition() + 1;
 		if(position != 0){
-			highscore.set(position, highscore.get(position) + " <- This round");
+			highscore.set(position - 1, highscore.get(position - 1) + " <- This round");
 		}
 	}
 	public void tick() {
