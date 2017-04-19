@@ -802,7 +802,7 @@ public class GameState extends State{
 	}
 	
 	private boolean isIn(int y){
-		if(y >= 510 && y <= 640){
+		if(y >= 520 && y <= 660){
 			return true;
 		}
 		return false;
