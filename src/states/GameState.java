@@ -35,9 +35,6 @@ import sounds.Effects;
 
 public class GameState extends State{
 	
-	
-	
-	
 	private LeftArrow leftArrow1, leftArrow2, leftArrow3, leftArrow4;
 	private UpArrow upArrow1, upArrow2, upArrow3, upArrow4;
 	private DownArrow downArrow1, downArrow2, downArrow3, downArrow4;

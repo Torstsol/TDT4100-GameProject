@@ -1,44 +1,138 @@
 package states;
 
+import java.awt.Color;
 //import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import game.Game;
+import gfx.Assets;
 import sounds.Effects;
 
 public class MenuState extends State {
 	
 	Effects song;
-	String[] songArray;
+	List<String> mapArray, soundArray, displayArray;
 	
-	private int songX = 50;
-	private int songY = 150;
+	List<Integer> speedArray;
+	
+	private int songX = 460;
+	private int songY = 370;
 	private int distance = 55;
-	private int songBoxLength = 370;
+	
+	private int songBoxLength = 95;
+	private int songBoxHeight = 98;
 	public String songString = "none";
 	
+	private int leftBox_x = 305;
+	private int leftBox_y = 280;
+	private int rightBox_x = 876;
+	private int rightBox_y = 280;
+	
+	private int middleBox_x = leftBox_x + songBoxLength;
+	private int middleBox_y = leftBox_y;
+	private int middleBoxLength = rightBox_x - middleBox_x;
+	
+	private int compansator = 30;
+	private int index = 5;
+	
+	private int toggle = -1;
+	private int mouseLock = 25;
+	private int counter = 0;
+	private int keyLock = 0;
 
 	public MenuState(Game game){
 		super(game);
 		song = new Effects();
-//		this.songArray= getSongs();
+		mapArray = new ArrayList<String>();
+		mapArray.add("E-Gikk i bakken");
+		mapArray.add("E-Mom is home");
+		mapArray.add("E-Trap paris");
+		mapArray.add("M-All I ever wanted");
+		mapArray.add("M-Hybrida");
+		mapArray.add("M-Ravers in the UK");
+		mapArray.add("M-Release");
+		mapArray.add("H-Friday Fahrenheit");
+		mapArray.add("H-Pon Pon Pon");
+		mapArray.add("S-Bocha Bass Kolbaser");
+		
+		soundArray = new ArrayList<String>();
+		soundArray.add("E-GikkIBakken");
+		soundArray.add("E-MomIsHome");
+		soundArray.add("E-TrapParis");
+		soundArray.add("M-AllIEverWanted");
+		soundArray.add("M-Hybrida");
+		soundArray.add("M-RaversInTheUK");
+		soundArray.add("M-Release");
+		soundArray.add("H-FridayFahrenheit");
+		soundArray.add("H-PonPonPon");
+		soundArray.add("S-BochkaBassKolbaser");
+		
+		displayArray = new ArrayList<String>();
+		displayArray.add("Easy: Gikk I Bakken");
+		displayArray.add("Easy: Mom Is Home");
+		displayArray.add("Easy: Trap Paris");
+		displayArray.add("Medium: All I Ever Wanted");
+		displayArray.add("Medium: Hybrida");
+		displayArray.add("Medium: Ravers In The UK");
+		displayArray.add("Medium: Release");
+		displayArray.add("Hard: Friday Fahrenheit");
+		displayArray.add("Hard: Pon Pon Pon");
+		displayArray.add("ACID: BochkaBassKolbaser");
+		
+		speedArray = new ArrayList<Integer>();
+		speedArray.add(3);
+		speedArray.add(3);
+		speedArray.add(3);
+		speedArray.add(6);
+		speedArray.add(6);
+		speedArray.add(6);
+		speedArray.add(6);
+		speedArray.add(6);
+		speedArray.add(9);
+		speedArray.add(9);
+
 	}
 	public void tick() {
-		//System.out.println(game.getMouseManager().getMouseX() + " " + game.getMouseManager().getMouseY());
-		if(game.getMouseManager().isLeftPressed()){
-			if(!songString.equals("none")){
-				try {
-					song.stopSound();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				State.setState(game.gameState);
-				game.gameState.playSong();
-				((GameState) game.gameState).setSongMap(songString);
+		
+		counter++;
+
+		if(game.getMouseManager().isLeftPressed() && toggle == 0 && counter >= keyLock){
+			keyLock = counter + mouseLock;
+			if(index - 1 < 0){
+				index = 9;
 			}
+			else{
+				index--;
+			}
+
+		}
+		if(game.getMouseManager().isLeftPressed() && toggle == 1 && counter >= keyLock){
+			keyLock = counter + mouseLock;
+			if(index + 1 > 9){
+				index = 0;
+			}
+			else{
+				index++;
+			}
+			
+		}
+		if(game.getMouseManager().isLeftPressed() && toggle == 2){
+			try {
+				song.stopSound();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			State.setState(game.gameState);
+			setSong(soundArray.get(index));
+			game.gameState.playSong();
+			((GameState) game.gameState).setArrowSpeed(speedArray.get(index)); //setter speed
+			((GameState) game.gameState).setSongMap(mapArray.get(index)); //setter map
+			
 		}
 
 		if(game.getMouseManager().isRightPressed()){
@@ -46,125 +140,37 @@ public class MenuState extends State {
 		}
 
 	}
-
 	
 	public void render(Graphics g) {
-		g.setFont(new Font("Verdana", Font.ITALIC, 30));
-		g.drawString("HovedMeny:", 1280/2 - 100, 50);
-
-		//liste med sanger
-		g.drawString("Velg sang: ", songX, songY - distance);
-		g.drawString("Gikk i bakken", songX, songY);
-		g.drawString("Mom is home", songX, songY + distance);
-		g.drawString("Trap-Paris", songX, songY + distance*2);
-		g.drawString("Friday-Fahrenheit", songX, songY + distance*3);
-		g.drawString("Pon Pon Pon", songX, songY + distance*4);
-		g.drawString("All I Ever Wanted", songX, songY + distance*5);
-		g.drawString("Hybrida i aare", songX, songY + distance*6);
-		g.drawString("Ravers in the UK", songX, songY + distance*7);
-		g.drawString("Release", songX, songY + distance*8);
-		g.drawString("Bocha Bass Kolbaser", songX, songY + distance*9);
+		g.drawImage(Assets.menuBg, 0, 0, 1280, 720, null);
+		g.setFont(new Font("Segoe UI Light", Font.BOLD, 30));
+		g.setColor(Color.WHITE);
+		g.drawString(displayArray.get(index), songX, songY);
+	
 		
-		//sang 1
-		if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + 5 && game.getMouseManager().getMouseY() > songY - 30 ){
-			g.drawRect(songX - 10, songY-30, songBoxLength, 35);
-			songString = "E-Gikk i bakken";
-			setSong("E-GikkIBakken");
-			((GameState) game.gameState).setArrowSpeed(3);
+		if(game.getMouseManager().getMouseX() > leftBox_x && game.getMouseManager().getMouseX() < leftBox_x + songBoxLength && game.getMouseManager().getMouseY() < leftBox_y + songBoxHeight + compansator  && game.getMouseManager().getMouseY() > leftBox_y ){
+			g.drawRect(leftBox_x, leftBox_y + compansator, songBoxLength, songBoxHeight);
+			toggle = 0;
 		}
-		//sang 2
-		else if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + distance + 5 && game.getMouseManager().getMouseY() > songY + distance - 30 ){
-			g.drawRect(songX - 10, songY + distance -30, songBoxLength, 35);
-			songString = "E-Mom is home";
-			setSong("E-MomIsHome");
-			((GameState) game.gameState).setArrowSpeed(3);
-		}
-		//sang 3
-		else if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + distance*2 + 5 && game.getMouseManager().getMouseY() > songY + distance*2 - 30 ){
-			g.drawRect(songX - 10, songY + distance*2 -30, songBoxLength, 35);
-			songString = "E-Trap paris";
-			setSong("E-TrapParis");
-			((GameState) game.gameState).setArrowSpeed(3);
-		}
-		//sang 4
-		else if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + distance*3 + 5 && game.getMouseManager().getMouseY() > songY + distance*3 - 30 ){
-			g.drawRect(songX - 10, songY + distance*3 -30, songBoxLength, 35);
-			songString = "H-Friday Fahrenheit";
-			setSong("H-FridayFahrenheit");
-			((GameState) game.gameState).setArrowSpeed(6);
 		
+		else if(game.getMouseManager().getMouseX() > rightBox_x && game.getMouseManager().getMouseX() < rightBox_x + songBoxLength + 2 && game.getMouseManager().getMouseY() < rightBox_y + songBoxHeight + compansator  && game.getMouseManager().getMouseY() > rightBox_y ){
+			g.drawRect(rightBox_x, rightBox_y + compansator, songBoxLength + 2, songBoxHeight);
+			toggle = 1;
 		}
-		//sang 5
-		else if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + distance*4 + 5 && game.getMouseManager().getMouseY() > songY + distance*4 - 30 ){
-			g.drawRect(songX - 10, songY + distance*4 -30, songBoxLength, 35);
-			songString = "H-Pon Pon Pon";
-			setSong("H-PonPonPon");
-			((GameState) game.gameState).setArrowSpeed(9);
-		}
-		//sang 6
-		else if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + distance*5 + 5 && game.getMouseManager().getMouseY() > songY + distance*5 - 30 ){
-			g.drawRect(songX - 10, songY + distance*5 -30, songBoxLength, 35);
-			songString = "M-All I ever wanted";
-			setSong("M-AllIEverWanted");
-			((GameState) game.gameState).setArrowSpeed(6);
-		}
-		//sang 7
-		else if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + distance*6 + 5 && game.getMouseManager().getMouseY() > songY + distance*6 - 30 ){
-			g.drawRect(songX - 10, songY + distance*6 -30, songBoxLength, 35);
-			songString = "M-Hybrida";
-			setSong("M-Hybrida");
-			((GameState) game.gameState).setArrowSpeed(6);
-		}
-		//sang 8
-		else if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + distance*7 + 5 && game.getMouseManager().getMouseY() > songY + distance*7 - 30 ){
-			g.drawRect(songX - 10, songY + distance*7 -30, songBoxLength, 35);
-			songString = "M-Ravers in the UK";
-			setSong("M-RaversInTheUK");
-			((GameState) game.gameState).setArrowSpeed(6);
-		}
-		//sang 9
-		else if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + distance*8 + 5 && game.getMouseManager().getMouseY() > songY + distance*8 - 30 ){
-			g.drawRect(songX - 10, songY + distance*8 -30, songBoxLength, 35);
-			songString = "M-Release";
-			setSong("M-Release");
-			((GameState) game.gameState).setArrowSpeed(6);
-		}
-		//sang 10
-		else if(game.getMouseManager().getMouseX() > songX - 10 && game.getMouseManager().getMouseX() < songX + songBoxLength && game.getMouseManager().getMouseY() < songY + distance*9 + 5 && game.getMouseManager().getMouseY() > songY + distance*9 - 30 ){
-			g.drawRect(songX - 10, songY + distance*9 -30, songBoxLength, 35);
-			songString = "S-Bocha Bass Kolbaser";
-			setSong("S-BochkaBassKolbaser");
-			((GameState) game.gameState).setArrowSpeed(9);
+		
+		else if(game.getMouseManager().getMouseX() > middleBox_x && game.getMouseManager().getMouseX() < middleBox_x + middleBoxLength + 2 && game.getMouseManager().getMouseY() < middleBox_y + songBoxHeight + compansator  && game.getMouseManager().getMouseY() > middleBox_y ){
+			g.drawRect(middleBox_x, middleBox_y + compansator, middleBoxLength, songBoxHeight);
+			toggle = 2;
 		}
 		else{
-			songString = "none";
+			toggle = -1;
 		}
 
-
-
 	}
 
-	
 	public void playSong() {
-		song.playSound("Elevator-music");
+		song.playSound("menuMusic");
 	}
-	
-//	public String[] getSongs(){
-//		File file = new File("res/songs");
-//		String path = file.getAbsolutePath();
-//		File folder = new File(path);
-//		File[] listOfFiles = folder.listFiles();
-//		String[] strListOfFiles = new String[listOfFiles.length];
-//		String songString = null;
-//
-//		    for (int i = 0; i < listOfFiles.length; i++) {
-//		      if (listOfFiles[i].isFile()) {
-//		        strListOfFiles[i] = listOfFiles[i].getName().replaceAll(".txt", "");
-//		        songString = songString + listOfFiles[i].getName().replaceAll(".txt", "") + "\n";
-//		      }
-//		    }
-//		return strListOfFiles;
-//	}
 	
 	private void setSong(String songName){
 		((GameState) game.gameState).setSongAudio(songName);
