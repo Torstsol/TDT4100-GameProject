@@ -31,8 +31,8 @@ public class FinishState extends State {
 		score = ((GameState) game.gameState).getScore();
 		song = ((GameState) game.gameState).getSong();
 		highscore = ((GameState) game.gameState).getHighscore();
-		position = ((GameState) game.gameState).getPosition();
-		if(position != -1){
+		position = ((GameState) game.gameState).getPosition() + 1;
+		if(position != 0){
 			highscore.set(position, highscore.get(position) + " <- This round");
 		}
 	}
@@ -83,7 +83,7 @@ public class FinishState extends State {
 		//render streak
 		g.setFont(new Font("Segoe UI Light", Font.BOLD, 50));
 		if(position < 10){
-			if(position == -1){
+			if(position == 0){
 				g.drawString("NaN", 1130, 405);
 			}
 			else{
