@@ -27,6 +27,7 @@ public class MenuState extends State {
 	private int songBoxLength = 95;
 	private int songBoxHeight = 98;
 	public String songString = "none";
+	private int compansator = 30;
 	
 	private int leftBox_x = 305;
 	private int leftBox_y = 280;
@@ -37,7 +38,12 @@ public class MenuState extends State {
 	private int middleBox_y = leftBox_y;
 	private int middleBoxLength = rightBox_x - middleBox_x;
 	
-	private int compansator = 30;
+	private int quitBox_x = 1010 + compansator;
+	private int quitBox_y = 552 - compansator;
+	private int quitBoxLength = 220;
+	private int quitBoxHeight = 89;
+	
+	
 	private int index = 5;
 	
 	private int toggle = -1;
@@ -135,9 +141,12 @@ public class MenuState extends State {
 			
 		}
 
-		if(game.getMouseManager().isRightPressed()){
+		if(game.getMouseManager().isLeftPressed() && toggle == 3 && counter >= keyLock){
+			keyLock = counter + mouseLock;
+			
 			System.exit(0);
 		}
+		
 
 	}
 	
@@ -162,6 +171,11 @@ public class MenuState extends State {
 			g.drawRect(middleBox_x, middleBox_y + compansator, middleBoxLength, songBoxHeight);
 			toggle = 2;
 		}
+		else if(game.getMouseManager().getMouseX() > quitBox_x && game.getMouseManager().getMouseX() < quitBox_x + quitBoxLength + 2 && game.getMouseManager().getMouseY() < quitBox_y + quitBoxHeight + compansator  && game.getMouseManager().getMouseY() > quitBox_y ){
+			g.drawRect(quitBox_x, quitBox_y + compansator, quitBoxLength, quitBoxHeight);
+			toggle = 3;
+		}
+		
 		else{
 			toggle = -1;
 		}
