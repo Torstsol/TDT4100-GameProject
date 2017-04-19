@@ -20,6 +20,7 @@ public class FinishState extends State {
 	int scoreX = 50;
 	int scoreY = 150;
 	int distance = 55; 
+	boolean exit = false;
 	
 	int score;
 	String song;
@@ -37,7 +38,7 @@ public class FinishState extends State {
 	}
 	public void tick() {
 		//System.out.println(game.getMouseManager().getMouseX() + " " + game.getMouseManager().getMouseY());
-		if(game.getMouseManager().isLeftPressed()){
+		if(game.getMouseManager().isLeftPressed() && exit){
 			State.setState(game.menuState);
 			game.menuState.playSong();
 			if(game.gameState.getResetGame()){
@@ -50,7 +51,7 @@ public class FinishState extends State {
 	public void render(Graphics g) {
 		
 		//bakgrunn
-		g.drawImage(Assets.bg, 0, 0, 831, 720, null);
+		g.drawImage(Assets.finishBg2, 0, 0, 831, 720, null);
 		g.drawImage(Assets.finishBg, 831, 0 , 449, 720, null);
 		g.setColor(Color.black);
 		g.fillRect(831, 0, 4, 720);
@@ -75,8 +76,8 @@ public class FinishState extends State {
 		}
 		
 		//render song
-		g.setFont(new Font("Segoe UI Light", Font.BOLD, 40));
-		g.drawString(song.substring(2), 900, 650);
+		g.setFont(new Font("Segoe UI Light", Font.BOLD, 30));
+		g.drawString(song.substring(2), 910, 650);
 		
 		
 		//render streak
@@ -94,10 +95,9 @@ public class FinishState extends State {
 		}
 		
 		//render highscore
-		g.setFont(new Font("Courier", Font.BOLD, 50));
+		g.setFont(new Font("Segoe UI Light", Font.BOLD, 50));
 		g.drawString("Highscore: " + song.substring(2), scoreX, scoreY - distance);
 		g.drawLine(scoreX-10, scoreY-50, 800, scoreY-50);
-		g.setFont(new Font("Courier", Font.BOLD, 30));
 		g.setFont(new Font("Courier", Font.BOLD, 30));
 		g.drawString("1. " + highscore.get(0), scoreX, scoreY);
 		g.drawString("2. " + highscore.get(1), scoreX, scoreY + distance);
@@ -109,6 +109,15 @@ public class FinishState extends State {
 		g.drawString("8. " + highscore.get(7), scoreX, scoreY + distance*7);
 		g.drawString("9. " + highscore.get(8), scoreX, scoreY + distance*8);
 		g.drawString("10." + highscore.get(9), scoreX, scoreY + distance*9);
+		
+		//render knapp
+		if (game.getMouseManager().getMouseX() > 430 && game.getMouseManager().getMouseX() < 430 + 365 && game.getMouseManager().getMouseY() < 555 + 110  && game.getMouseManager().getMouseY() > 555 ){
+			g.drawRect(430, 555, 365, 110);
+			exit = true;
+		}
+		else{
+			exit = false;
+		}
 		
 	}
 
