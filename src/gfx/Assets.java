@@ -26,7 +26,7 @@ public class Assets {
 		
 		bg1 = sheet2.crop(0, 0, 449, 720);
 		
-		SpriteSheet sheet3 = new SpriteSheet(ImageLoader.loadImage("/textures/menuBg3.png"));
+		SpriteSheet sheet3 = new SpriteSheet(ImageLoader.loadImage("/textures/menuBg4.png"));
 		
 		menuBg = sheet3.crop(0, 0, 1280, 720);
 		
