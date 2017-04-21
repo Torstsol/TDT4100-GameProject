@@ -51,7 +51,7 @@ public class MenuState extends State {
 	private int selector = 0;
 	private int index1 = 0;
 	
-	private int moveDown = 150;
+	private int moveDown = 146;
 	private int mouseLock = 25;
 	private int counter = 0;
 	private int keyLock = 0;
@@ -61,7 +61,7 @@ public class MenuState extends State {
 		song = new Effects();
 		
 		inputArray = new ArrayList<String>();
-		inputArray.add("Piltaster (mulige problemer");
+		inputArray.add("Piltaster (NB: Ghosting)");
 		inputArray.add("QWER");
 		
 		mapArray = new ArrayList<String>();
