@@ -161,6 +161,7 @@ public class MenuState extends State {
 			else{
 				index1= 0;
 			}
+			selector =index1;
 		}
 		if(game.getMouseManager().isLeftPressed() && toggle == 5 && counter >= keyLock){
 			keyLock = counter + mouseLock;
@@ -170,14 +171,15 @@ public class MenuState extends State {
 			else{
 				index1= 1;
 			}
+			selector =index1;
 			
 		}
-		if(game.getMouseManager().isLeftPressed() && toggle == 6){
-
-			selector = index1;
-			System.out.println(selector);
-			
-		}
+//		if(game.getMouseManager().isLeftPressed() && toggle == 6){
+//
+//			selector = index1;
+//			System.out.println(selector);
+//			
+//		}
 
 		if(game.getMouseManager().isLeftPressed() && toggle == 3 && counter >= keyLock){
 			keyLock = counter + mouseLock;
@@ -222,11 +224,6 @@ public class MenuState extends State {
 		else if(game.getMouseManager().getMouseX() > rightBox_x && game.getMouseManager().getMouseX() < rightBox_x + songBoxLength + 2 && game.getMouseManager().getMouseY() < rightBox_y + songBoxHeight + compansator + moveDown && game.getMouseManager().getMouseY() > rightBox_y + moveDown){
 			g.drawRect(rightBox_x, rightBox_y + compansator + moveDown, songBoxLength + 2 , songBoxHeight);
 			toggle = 5;
-		}
-		
-		else if(game.getMouseManager().getMouseX() > middleBox_x && game.getMouseManager().getMouseX() < middleBox_x + middleBoxLength + 2 && game.getMouseManager().getMouseY() < middleBox_y + songBoxHeight + compansator + moveDown  && game.getMouseManager().getMouseY() > middleBox_y+ moveDown ){
-			g.drawRect(middleBox_x, middleBox_y + compansator + moveDown, middleBoxLength, songBoxHeight);
-			toggle = 6;
 		}
 		else{
 			toggle = -1;
