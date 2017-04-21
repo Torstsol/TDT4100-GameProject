@@ -29,7 +29,7 @@ public class Game implements Runnable {
 	public State finishState;
 	
 	//input
-	private KeyManager keyManager;
+	public KeyManager keyManager;
 	private MouseManager mouseManager;
 	
 	public Game(String title, int width, int height){
@@ -37,7 +37,7 @@ public class Game implements Runnable {
 		this.width = width;
 		this.height = height;
 		running = false;
-		keyManager = new KeyManager();
+		keyManager = new KeyManager(0);
 		mouseManager = new MouseManager();
 		
 		

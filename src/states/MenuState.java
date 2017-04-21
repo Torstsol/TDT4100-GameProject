@@ -11,12 +11,13 @@ import java.util.List;
 
 import game.Game;
 import gfx.Assets;
+import input.KeyManager;
 import sounds.Effects;
 
 public class MenuState extends State {
 	
 	Effects song;
-	List<String> mapArray, soundArray, displayArray;
+	List<String> mapArray, soundArray, displayArray, inputArray;
 	
 	List<Integer> speedArray;
 	
@@ -47,6 +48,9 @@ public class MenuState extends State {
 	private int index = 5;
 	
 	private int toggle = -1;
+	private int toggle1 = -1;
+	private int index1 = 0;
+	private int moveDown = 150;
 	private int mouseLock = 25;
 	private int counter = 0;
 	private int keyLock = 0;
@@ -54,6 +58,11 @@ public class MenuState extends State {
 	public MenuState(Game game){
 		super(game);
 		song = new Effects();
+		
+		inputArray = new ArrayList<String>();
+		inputArray.add("Piltaster (mulige problemer");
+		inputArray.add("QWER");
+		
 		mapArray = new ArrayList<String>();
 		mapArray.add("E-Gikk i bakken");
 		mapArray.add("E-Mom is home");
@@ -140,6 +149,32 @@ public class MenuState extends State {
 			((GameState) game.gameState).setSongMap(mapArray.get(index)); //setter map
 			
 		}
+		
+		//input
+		if(game.getMouseManager().isLeftPressed() && toggle1 == 0 && toggle != 0 && counter >= keyLock){
+			keyLock = counter + mouseLock;
+			if(index1 == 0){
+				index1 = 1;
+			}
+			else{
+				index1= 0;
+			}
+		}
+		if(game.getMouseManager().isLeftPressed() && toggle1 == 1 %% toggle != 0 && counter >= keyLock){
+			keyLock = counter + mouseLock;
+			if(index1 == 1){
+				index1 = 0;
+			}
+			else{
+				index1= 1;
+			}
+			
+		}
+		if(game.getMouseManager().isLeftPressed() && toggle1 == 2){
+
+			//game.keyManager = new KeyManager(index1);
+			
+		}
 
 		if(game.getMouseManager().isLeftPressed() && toggle == 3 && counter >= keyLock){
 			keyLock = counter + mouseLock;
@@ -155,6 +190,7 @@ public class MenuState extends State {
 		g.setFont(new Font("Segoe UI Light", Font.BOLD, 30));
 		g.setColor(Color.WHITE);
 		g.drawString(displayArray.get(index), songX, songY);
+		g.drawString(inputArray.get(index1), songX, songY + moveDown);
 	
 		
 		if(game.getMouseManager().getMouseX() > leftBox_x && game.getMouseManager().getMouseX() < leftBox_x + songBoxLength && game.getMouseManager().getMouseY() < leftBox_y + songBoxHeight + compansator  && game.getMouseManager().getMouseY() > leftBox_y ){
@@ -176,6 +212,26 @@ public class MenuState extends State {
 			toggle = 3;
 		}
 		
+		else{
+			toggle = -1;
+		}
+		
+		//inputskifter
+		
+		if(game.getMouseManager().getMouseX() > leftBox_x && game.getMouseManager().getMouseX() < leftBox_x + songBoxLength && game.getMouseManager().getMouseY() < leftBox_y + songBoxHeight + compansator + moveDown && game.getMouseManager().getMouseY() > leftBox_y +moveDown ){
+			g.drawRect(leftBox_x, leftBox_y + compansator +moveDown, songBoxLength, songBoxHeight);
+			toggle1 = 0;
+		}
+		
+		else if(game.getMouseManager().getMouseX() > rightBox_x && game.getMouseManager().getMouseX() < rightBox_x + songBoxLength + 2 && game.getMouseManager().getMouseY() < rightBox_y + songBoxHeight + compansator +moveDown && game.getMouseManager().getMouseY() > rightBox_y +moveDown){
+			g.drawRect(rightBox_x, rightBox_y + compansator +moveDown, songBoxLength + 2, songBoxHeight);
+			toggle1 = 1;
+		}
+		
+		else if(game.getMouseManager().getMouseX() > middleBox_x && game.getMouseManager().getMouseX() < middleBox_x + middleBoxLength + 2 && game.getMouseManager().getMouseY() < middleBox_y + songBoxHeight + compansator +moveDown && game.getMouseManager().getMouseY() > middleBox_y +moveDown){
+			g.drawRect(middleBox_x, middleBox_y + compansator+moveDown, middleBoxLength, songBoxHeight);
+			toggle1 = 2;
+		}
 		else{
 			toggle = -1;
 		}
