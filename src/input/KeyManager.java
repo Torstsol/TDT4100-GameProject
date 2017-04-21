@@ -13,6 +13,7 @@ public class KeyManager implements KeyListener{
 		this.binds = binds;
 		keys = new boolean[256];
 	}
+
 	
 	public void tick(){
 		
@@ -43,6 +44,10 @@ public class KeyManager implements KeyListener{
 	
 	public void keyTyped(KeyEvent e) {
 		keys[e.getKeyChar()] = true;
+	}
+
+	public void setKeys(int selector) {
+		this.binds = selector;
 	}
 
 }

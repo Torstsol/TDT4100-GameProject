@@ -29,6 +29,7 @@ import entities.props.UpArrow;
 import entities.props.UpHit;
 import game.Game;
 import gfx.Assets;
+import input.KeyManager;
 import songMaps.SongMap;
 import sounds.Effects;
 
@@ -131,6 +132,7 @@ public class GameState extends State{
 	}
 
 	public void tick() {
+		
 		leftArrow1.tick();
 		leftArrow2.tick();
 		leftArrow3.tick();
