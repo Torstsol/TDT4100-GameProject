@@ -9,4 +9,4 @@ Game Project in the course TDT4100 Objectoriented programming at NTNU, Trondheim
 The game features multiple maps/songs, difficulties and a Highscore. 
 
 Disclamer:
-This whas created when our comprehension of Git was minimal, we had to rebase and the comments are complete trash.
+This whas created when our comprehension of Git was minimal, we had to rebase and the comments are lackluster. 
